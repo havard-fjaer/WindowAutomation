@@ -12,34 +12,46 @@
 
 #endif
 
+
 class WindowStateMachine
 {
 
 public:
 
-	WindowStateMachine();
+	enum WindowState { WINDOW_OPEN, WINDOW_CLOSED, WINDOW_OPENING, WINDOW_CLOSING, WINDOW_STOPPED };
+
+	WindowStateMachine(bool);
 
 	~WindowStateMachine();
 
 	void init();
 
-	void stopWindow(void);
+	void runCycle();
 
-	void openWindow(void);
-
-	void closeWindow(void);
+	bool openedSensorIsActive(void);
+	bool closedSensorIsActive(void);
+	bool openWindowCommandIsActive;
+	bool closeWindowCommandIsActive;
+	bool stopWindowCommandIsActive;
 
 private:
 	
+	bool loggingActive;
+	void Log(char*);
 
 	// State
-	enum windowState { WINDOW_OPEN, WINDOW_CLOSED, WINDOW_OPENING, WINDOW_CLOSING, WINDOW_STOPPED };
-    enum windowState windowState = WINDOW_STOPPED;
+    enum WindowState windowState = WINDOW_STOPPED;
 
 	// Pins
 	const int motorClosePin = PIN2;
 	const int motorOpenPin = PIN3;
 	const int sensorClosedPin = PINA0;
 	const int sensorOpenedPin = PINA1;
+
+
+	void stopWindow(void);
+	void openWindow(void);
+	void closeWindow(void);
+
 
 };
