@@ -1,12 +1,9 @@
-// 
-// 
-// 
 
 #include "WindowStateMachine.h"
 
-WindowStateMachine::WindowStateMachine(bool la)
+WindowStateMachine::WindowStateMachine(bool loggingActive)
 {
-	loggingActive = la;
+	WindowStateMachine::loggingActive = loggingActive;
 }
 
 WindowStateMachine::~WindowStateMachine()
@@ -16,21 +13,17 @@ WindowStateMachine::~WindowStateMachine()
 void WindowStateMachine::init()
 {
 	Log("WindowStateMachine::init() - Start");
-
 	pinMode(motorClosePin, OUTPUT);
 	pinMode(motorOpenPin, OUTPUT);
 	pinMode(sensorClosedPin, INPUT_PULLUP);
 	pinMode(sensorOpenedPin, INPUT_PULLUP);
 	windowState = WINDOW_STOPPED;
-
 	Log("WindowStateMachine::init() - End");
-
 }
 
 void WindowStateMachine::runCycle()
 {
 	WindowState newState = windowState;
-
 	switch (windowState)
 	{
 	case WINDOW_OPEN:
@@ -111,10 +104,10 @@ void WindowStateMachine::runCycle()
 	}
 	if (windowState != newState)
 	{
-		Log("State change:");
 		windowState = newState;
 		switch (windowState)
 		{
+			// TODO: Find something more elegant, such as a dicitionary.
 		case WINDOW_OPEN: Log("WINDOW_OPEN"); break;
 		case WINDOW_CLOSED: Log("WINDOW_CLOSED"); break;
 		case WINDOW_OPENING: Log("WINDOW_OPENING"); break;
@@ -135,7 +128,6 @@ void WindowStateMachine::stopWindow(void)
 	digitalWrite(motorClosePin, LOW);
 	digitalWrite(motorOpenPin, LOW);
 	Log("stopWindow");
-
 }
 
 void WindowStateMachine::openWindow(void)
@@ -163,10 +155,9 @@ bool WindowStateMachine::closedSensorIsActive(void)
 }
 
 void WindowStateMachine::Log(char* log) {
-	if (loggingActive/* && strcmp(log, lastLogEntry) != 0*/)
+	if (loggingActive)
 	{
 		Serial.println(log);
-		/*strcpy(log, lastLogEntry);*/
 	}
 }
 
