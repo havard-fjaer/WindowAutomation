@@ -10,17 +10,19 @@ WindowStateMachine::~WindowStateMachine()
 {
 }
 
+// Initialize pins and state.
 void WindowStateMachine::init()
 {
-	Log("WindowStateMachine::init() - Start");
+	Log("WindowStateMachine::init()");
 	pinMode(motorClosePin, OUTPUT);
 	pinMode(motorOpenPin, OUTPUT);
 	pinMode(sensorClosedPin, INPUT_PULLUP);
 	pinMode(sensorOpenedPin, INPUT_PULLUP);
 	windowState = WINDOW_STOPPED;
-	Log("WindowStateMachine::init() - End");
 }
 
+
+// Check sensors and command flags based on current state -- and act accordingly.
 void WindowStateMachine::runCycle()
 {
 	WindowState newState = windowState;
@@ -117,11 +119,14 @@ void WindowStateMachine::runCycle()
 	}
 }
 
+// Need to remember clearing all flags when running a command in order to avoid strange behaviour.
 void WindowStateMachine::clearCommandFlags() {
 	openWindowCommandIsActive = false;
 	closeWindowCommandIsActive = false;
 	stopWindowCommandIsActive = false;
 }
+
+/*** Motor commands ***/
 
 void WindowStateMachine::stopWindow(void)
 {
@@ -144,6 +149,8 @@ void WindowStateMachine::closeWindow(void)
 	Log("closeWindow");
 }
 
+/*** Sensors ***/
+
 bool WindowStateMachine::openedSensorIsActive(void)
 {
 	return !digitalRead(sensorOpenedPin);
@@ -153,6 +160,8 @@ bool WindowStateMachine::closedSensorIsActive(void)
 {
 	return !digitalRead(sensorClosedPin);
 }
+
+/*** Logging ***/
 
 void WindowStateMachine::Log(char* log) {
 	if (loggingActive)

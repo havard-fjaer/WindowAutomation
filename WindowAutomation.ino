@@ -26,6 +26,7 @@ void loop()
 	windowStateMachine->runCycle();
 }
 
+// Connecting blitlash commands to commands in the state machine
 void initBitlashFunctions(void) {
 	addBitlashFunction("openwindow", (bitlash_function)openWindow);
 	addBitlashFunction("closewindow", (bitlash_function)closeWindow);

@@ -1,7 +1,7 @@
 
 #include "arduino.h"
 
-
+// State machine to keep track of sensors and commands when opening and closing the window.
 class WindowStateMachine
 {
 
