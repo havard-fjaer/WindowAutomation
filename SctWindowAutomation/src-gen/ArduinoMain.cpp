@@ -20,6 +20,8 @@ void setup() {
 	connector = new WindowAutomationConnector(statemachine);
 	timer = new ATmega_Timer1(statemachine, connector, MAX_PARALLEL_TIMERS, CYCLE_PERIOD);
 
+	statemachine->setTimer(timer);
+	timer->start();
 }
 
 void loop() {
