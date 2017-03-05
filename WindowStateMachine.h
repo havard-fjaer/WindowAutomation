@@ -11,6 +11,8 @@
 
 
 #endif
+#include <stdio.h>
+#include <string.h>
 
 
 class WindowStateMachine
@@ -30,14 +32,15 @@ public:
 
 	bool openedSensorIsActive(void);
 	bool closedSensorIsActive(void);
-	bool openWindowCommandIsActive;
-	bool closeWindowCommandIsActive;
-	bool stopWindowCommandIsActive;
+	bool openWindowCommandIsActive = false;
+	bool closeWindowCommandIsActive = false;
+	bool stopWindowCommandIsActive = false;
 
 private:
 	
 	bool loggingActive;
 	void Log(char*);
+	char* lastLogEntry;
 
 	// State
     enum WindowState windowState = WINDOW_STOPPED;
@@ -45,9 +48,10 @@ private:
 	// Pins
 	const int motorClosePin = PIN2;
 	const int motorOpenPin = PIN3;
-	const int sensorClosedPin = PINA0;
-	const int sensorOpenedPin = PINA1;
+	const int sensorClosedPin = PIN6;
+	const int sensorOpenedPin = PIN7;
 
+	void clearCommandFlags(void);
 
 	void stopWindow(void);
 	void openWindow(void);
