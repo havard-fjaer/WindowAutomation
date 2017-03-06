@@ -28,9 +28,9 @@ void loop()
 
 // Connecting blitlash commands to commands in the state machine
 void initBitlashFunctions(void) {
-	addBitlashFunction("openwindow", (bitlash_function)openWindow);
-	addBitlashFunction("closewindow", (bitlash_function)closeWindow);
-	addBitlashFunction("stopwindow", (bitlash_function)stopWindow);
+	addBitlashFunction("window.open", (bitlash_function)openWindow);
+	addBitlashFunction("window.close", (bitlash_function)closeWindow);
+	addBitlashFunction("window.stop", (bitlash_function)stopWindow);
 }
 
 void openWindow() {
